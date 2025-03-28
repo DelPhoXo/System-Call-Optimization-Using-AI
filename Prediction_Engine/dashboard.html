@@ -1,1 +1,42 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Call Optimization Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        img { margin: 20px; max-width: 600px; }
+        form { margin: 20px; }
+        table { margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>System Call Optimization Dashboard</h1>
+    
+    <form method="POST">
+        <label>Filter by PID: </label><input type="number" name="pid"><br><br>
+        <label>Time Start: </label><input type="text" name="time_start" placeholder="e.g., 10:00"><br><br>
+        <label>Time End: </label><input type="text" name="time_end" placeholder="e.g., 10:04"><br><br>
+        <input type="submit" value="Apply Filters">
+    </form>
+    
+    <h2>Latency Trend Over Time</h2>
+    <img src="data:image/png;base64,{{ latency_plot }}" alt="Latency Trend">
+    
+    <h2>Before vs After Comparison</h2>
+    <img src="data:image/png;base64,{{ comparison_plot }}" alt="Comparison">
+    
+    <h2>Filtered Data</h2>
+    <table>
+        <tr>
+            <th>Time</th><th>Syscall</th><th>Latency Before</th><th>Latency After</th><th>PID</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.time }}</td><td>{{ row.syscall }}</td><td>{{ row.latency_before }}</td>
+            <td>{{ row.latency_after }}</td><td>{{ row.pid }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
