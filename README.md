@@ -1,74 +1,119 @@
-markdown
-# System Call Prediction using LSTM
+# AI-Powered System Call Optimization Dashboard
 
-## Overview
-This project aims to optimize system performance by predicting upcoming system calls using an LSTM-based deep learning model. By preloading and caching frequently used system calls, the model reduces execution time and enhances efficiency. The project consists of three core modules: **Data Preprocessing**, **Model Training**, and **Prediction Engine**.
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-Web%20App-green?logo=flask)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-AI%20Model-orange?logo=tensorflow)
 
-## Features
-- **System Call Sequence Processing:** Cleans and tokenizes system call sequences.
-- **LSTM-Based Prediction:** Trains a deep learning model to forecast system calls.
-- **Caching and Batch Execution:** Improves efficiency by preloading and grouping system calls.
-- **Interactive Dashboard:** Provides a visual representation of system call predictions.
+---
 
-## Project Structure
-```
-System-Call-Prediction/
-│── Data_Preprocessing/
-│   ├── data_loader.py        # Loads and preprocesses system call sequences
-│
-│── Model_Training/
-│   ├── train_model.py        # Trains the LSTM model for system call prediction
-│
-│── Prediction_Engine/
-│   ├── dashboard.html        # Frontend dashboard for visualizing predictions
-│   ├── dashboard.py          # Backend logic for running predictions and UI
-│
-│── main.py                   # Runs the complete system call prediction pipeline
-│── requirements.txt           # Dependencies for the project
-│── README.md                  # Project documentation
+## 🚀 Overview
+
+This project is an **AI-powered system call latency optimizer** designed to monitor system calls, analyze their latency, and predict improved latency using a machine learning model (LSTM). It includes a **Flask-based dashboard** for interactive visualization.
+
+---
+
+## 📂 Project Structure
+
+```bash
+├── abc.py                  # Collects syscall logs into syscall_logs.csv
+├── optimize.py            # AI model to optimize syscall latency
+├── dashboard.py           # Flask-based interactive dashboard
+├── templates/
+│   └── dashboard.html     # Dashboard UI template
+├── syscall_logs.csv       # Input: Raw syscall data (generated)
+├── optimized_logs.csv     # Output: Optimized syscall data (generated)
+├── requirements.txt       # Required Python libraries
 ```
 
-## Installation
-### Prerequisites
-- Python 3.x
-- TensorFlow
-- NumPy
-- Flask (for the dashboard)
+---
 
-### Steps to Run the Project
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/System-Call-Prediction.git
-   ```
-2. Navigate to the project directory:
-   ```sh
-   cd System-Call-Prediction
-   ```
-3. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
-   ```
-4. Train the model:
-   ```sh
-   python Model_Training/train_model.py
-   ```
-5. Run the prediction engine and dashboard:
-   ```sh
-   python Prediction_Engine/dashboard.py
-   ```
-6. Open `dashboard.html` in your browser to view the predictions.
+## 💡 Features
 
-## Future Enhancements
-- Implement real-time system call monitoring.
-- Optimize the LSTM model for better accuracy and speed.
-- Extend compatibility for different operating systems.
+- ✅ **System Call Monitoring** via strace (manually or through script)
+- ✅ **LSTM-based Latency Prediction** using TensorFlow
+- ✅ **Clean Visualization** with Flask and Matplotlib
+- ✅ **Interactive Dashboard** with filtering (PID, Time)
+- ✅ **Before vs After Comparison** (Charts + Table)
 
-## License
-This project is licensed under the MIT License.
-## Authors  
-- **Jatin Kumar Prajapati** - [DelPhoXo](https://github.com/DelPhoXo)  
-- **Kishan Ojha** - [kishanojha12](https://github.com/kishanojha12)  
-- **Gaurav** - [CipherNinja01x](https://github.com/CipherNinja01x)  
+---
 
-## Contributions
-Contributions are welcome! Feel free to create a pull request or open an issue.
+## 🧠 How It Works
+
+### Step 1: Collect System Call Logs
+Use `abc.py` to generate syscall logs (or create your own CSV in the format):
+```csv
+syscall,frequency,latency,pid,time
+read,23,0.004,1234,2024-04-01 10:10:00
+write,10,0.007,1234,2024-04-01 10:10:01
+```
+
+### Step 2: Run the Optimizer
+Train the LSTM model and generate `optimized_logs.csv`:
+```bash
+python optimize.py
+```
+
+### Step 3: Start the Dashboard
+Launch the Flask dashboard:
+```bash
+python dashboard.py
+```
+Then visit: `http://127.0.0.1:5000`
+
+---
+
+## 📊 Dashboard UI
+
+- **Line Chart**: Latency Before vs After over time
+- **Bar Chart**: Average Before vs After latency
+- **Table**: Filterable syscall log entries
+- **Filters**: PID and time range
+
+---
+
+## 🛠️ Requirements
+
+```txt
+flask
+pandas
+matplotlib
+tensorflow
+scikit-learn
+```
+
+Install all dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 📌 Use Cases
+
+- OS performance analysis and tuning
+- Real-time syscall latency monitoring
+- ML-based syscall behavior research
+- Educational visualization for operating systems
+
+---
+
+## 🧑‍💻 Author
+
+**Kishan Ojha**  
+_B.Tech CSE @ LPU | Cybersecurity & AI Enthusiast_ 
+**Gaurav Kumar**
+_B.Tech CSE @ LPU | Cloud Computing_
+**Jatin Kumar Prajapati**
+_B.Tech CSE @ LPU | Software Testing_
+---
+
+## 📎 License
+
+This project is open-source under the MIT License.
+
+---
+
+## 🙌 Support or Contribute
+
+Found a bug? Have suggestions? Feel free to open an issue or PR. Contributions are welcome!
+
