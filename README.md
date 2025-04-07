@@ -1,8 +1,8 @@
 # AI-Powered System Call Optimization Dashboard
 
-![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
-![Flask](https://img.shields.io/badge/Flask-Web%20App-green?logo=flask)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-AI%20Model-orange?logo=tensorflow)
+
+
+
 
 ---
 
@@ -40,7 +40,9 @@ This project is an **AI-powered system call latency optimizer** designed to moni
 ## 🧠 How It Works
 
 ### Step 1: Collect System Call Logs
+
 Use `abc.py` to generate syscall logs (or create your own CSV in the format):
+
 ```csv
 syscall,frequency,latency,pid,time
 read,23,0.004,1234,2024-04-01 10:10:00
@@ -48,16 +50,21 @@ write,10,0.007,1234,2024-04-01 10:10:01
 ```
 
 ### Step 2: Run the Optimizer
+
 Train the LSTM model and generate `optimized_logs.csv`:
+
 ```bash
 python optimize.py
 ```
 
 ### Step 3: Start the Dashboard
+
 Launch the Flask dashboard:
+
 ```bash
 python dashboard.py
 ```
+
 Then visit: `http://127.0.0.1:5000`
 
 ---
@@ -82,6 +89,7 @@ scikit-learn
 ```
 
 Install all dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -100,11 +108,9 @@ pip install -r requirements.txt
 ## 🧑‍💻 Author
 
 **Kishan Ojha**  
-_B.Tech CSE @ LPU | Cybersecurity & AI Enthusiast_ 
-**Gaurav Kumar**
-_B.Tech CSE @ LPU | Cloud Computing_
-**Jatin Kumar Prajapati**
-_B.Tech CSE @ LPU | Software Testing_
+**Gaurav Kumar**  
+**Jatin Kumar Prajapati**  
+
 ---
 
 ## 📎 License
