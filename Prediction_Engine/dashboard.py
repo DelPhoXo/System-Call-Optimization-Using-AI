@@ -6,62 +6,63 @@ import base64
 
 app = Flask(__name__)
 
-# Load optimized data from Module 2
+# Load data
 df = pd.read_csv("optimized_logs.csv")
 
-# Function to generate plot and convert to base64
+# Convert 'time' to string (in case it's not)
+df['time'] = df['time'].astype(str)
+
+# Plot to Base64
 def plot_to_base64(plot_func):
     img = io.BytesIO()
     plot_func()
-    plt.savefig(img, format='png', bbox_inches='tight')
+    plt.savefig(img, format='png', bbox_inches='tight', facecolor='white')
     img.seek(0)
     plot_base64 = base64.b64encode(img.getvalue()).decode('utf8')
     plt.close()
     return plot_base64
 
-# Plot 1: Latency Trend (Line Chart)
+# Plot 1: Latency Trend
 def plot_latency_trend(filtered_df):
-    plt.figure(figsize=(8, 4))
+    plt.figure(figsize=(10, 4))
     plt.plot(filtered_df['time'], filtered_df['latency_before'], label="Before Optimization", color="red", marker='o')
     plt.plot(filtered_df['time'], filtered_df['latency_after'], label="After Optimization", color="green", marker='o')
     plt.xlabel("Time")
-    plt.ylabel("Latency (seconds)")
-    plt.title("Latency Trend Over Time")
+    plt.ylabel("Latency (s)")
+    plt.title("Latency Trend Over Time", fontsize=14, fontweight='bold')
     plt.legend()
     plt.grid(True)
 
-# Plot 2: Before vs After Comparison (Bar Chart)
+# Plot 2: Bar Comparison
 def plot_comparison(filtered_df):
-    plt.figure(figsize=(6, 4))
+    plt.figure(figsize=(5, 4))
     plt.bar(["Before", "After"], 
             [filtered_df['latency_before'].mean(), filtered_df['latency_after'].mean()],
             color=["red", "green"])
-    plt.ylabel("Average Latency (seconds)")
-    plt.title("Latency Before vs After Optimization")
+    plt.ylabel("Average Latency (s)")
+    plt.title("Latency Before vs After Optimization", fontsize=12)
 
-# Flask Route
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
-    filtered_df = df
+    filtered_df = df.copy()
     
     if request.method == 'POST':
-        pid_filter = request.form.get('pid')
-        time_start = request.form.get('time_start')
-        time_end = request.form.get('time_end')
-        
-        if pid_filter:
-            filtered_df = filtered_df[filtered_df['pid'] == int(pid_filter)]
-        if time_start and time_end:
-            filtered_df = filtered_df[(filtered_df['time'] >= time_start) & 
-                                    (filtered_df['time'] <= time_end)]
-    
+        pid = request.form.get('pid')
+        t_start = request.form.get('time_start')
+        t_end = request.form.get('time_end')
+
+        if pid:
+            filtered_df = filtered_df[filtered_df['pid'] == int(pid)]
+        if t_start and t_end:
+            filtered_df = filtered_df[(filtered_df['time'] >= t_start) & (filtered_df['time'] <= t_end)]
+
     latency_plot = plot_to_base64(lambda: plot_latency_trend(filtered_df))
     comparison_plot = plot_to_base64(lambda: plot_comparison(filtered_df))
-    
-    return render_template('dashboard.html', 
-                         latency_plot=latency_plot, 
-                         comparison_plot=comparison_plot, 
-                         data=filtered_df.to_dict(orient='records'))
+
+    return render_template('dashboard.html',
+                           latency_plot=latency_plot,
+                           comparison_plot=comparison_plot,
+                           data=filtered_df.to_dict(orient='records'))
 
 if __name__ == '__main__':
     app.run(debug=True)
