@@ -1,6 +1,8 @@
 # AI-Powered System Call Optimization Dashboard
 
-
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-Web%20App-green?logo=flask)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-AI%20Model-orange?logo=tensorflow)
 
 
 
